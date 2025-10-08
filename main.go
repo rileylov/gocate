@@ -104,9 +104,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.statusMessage = fmt.Sprintf("os.Stat error: %v", err)
 			}
 			if info != nil && info.IsDir() {
-				err := clipboard.WriteAll("cd " + m.table.SelectedRow()[2])
+
+				cmd := exec.Command("ghostty", "-e", "cd", m.table.SelectedRow()[2])
+				err := cmd.Run()
 				if err != nil {
-					m.statusMessage = fmt.Sprintf("Couldn't write to clipboard: %v", err)
+					fmt.Println("Error spawning terminal:", err)
 				}
 				return m, tea.Quit
 			}
