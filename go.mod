@@ -1,4 +1,4 @@
-module gocate
+module github.com/rileylov/gocate
 
 go 1.25.1
 
